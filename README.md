@@ -98,8 +98,8 @@ Go ahead and download Pypy from github and run
 python ./pypy/pypy/translator/goal/translate.py pypyevallop.py
 ```
 
-The resul will be an executable binary that you can then use to interpret the BrainFuck file much much faster.
+The result will be an executable binary that you can then use to interpret the BrainFuck file much much faster.
 
 ```
-./pypyevallop-c 99beer.c
+./pypyevallop-c 99beer.b
 ```
