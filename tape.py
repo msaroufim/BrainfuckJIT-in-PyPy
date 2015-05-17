@@ -11,7 +11,7 @@ class Tape():
         return self.thetape[self.position]
 
     def set(self,val):
-        return self.thetape[self.position] = value
+        self.thetape[self.position] = val
 
     def inc(self):
         self.thetape[self.position] += 1
@@ -30,5 +30,5 @@ class Tape():
         If we are too far left the insert a 0
         at the first element of the thetape
         """
-        if not thetape[self.position]:
+        if not self.thetape[self.position]:
             self.thetape.insert(0, 0)
