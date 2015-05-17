@@ -26,9 +26,9 @@ class Tape():
 
     def devance(self):
         self.position -= 1
-        """
-        If we are too far left the insert a 0
-        at the first element of the thetape
-        """
-        if not self.thetape[self.position]:
-            self.thetape.insert(0, 0)
+        # """
+        # If we are too far left the insert a 0
+        # at the first element of the thetape
+        # """
+        # if not self.thetape[self.position]:
+        #     self.thetape.insert(0, 0)
