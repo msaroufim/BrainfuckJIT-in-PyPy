@@ -59,4 +59,6 @@ def run(input):
     mainloop(program,map)
 
 if __name__ == "__main__":
+    #import pdb; pdb.set_trace()
     run(open(sys.argv[1],'r'))
+

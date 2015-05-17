@@ -72,3 +72,34 @@ elif code == ".":
 For looping we need a way to keep track of matching brackets and we do this via a simple stack when parsing the program and we will pass the matching brackets in a dictionary form to the main loop.
 
 ##PyPy translation
+
+The above was undoubtedly incredibly slow, so to speed it up we'll write the above using RPython which implements a restricted subset of Python to allow speedups.
+
+For example, we can no longer use ```sys.stdout.write``` but will instead use ```os.write```
+
+```python
+elif code == ".":
+    os.write(1, chr(tape.get()))
+```
+
+More importantly, we're expected to implement three functions:
+
+* ```target``` which returns an ```entry_point``` function
+* ```entry_point``` which given a filename creates a file pointer for ```run```
+* ```run``` which will ```os.read(fp)```, populate the ```program_contents```, parse it and then run evaluate it.
+
+```pypy-evalloop.py``` contains the details
+
+###Usage
+
+Go ahead and download Pypy from github and run
+
+```
+python ./pypy/pypy/translator/goal/translate.py pypyevallop.py
+```
+
+The resul will be an executable binary that you can then use to interpret the BrainFuck file much much faster.
+
+```
+./pypyevallop-c 99beer.c
+```
