@@ -1,4 +1,4 @@
-#Implementing BrainFuck in PyPy
+#Implementing BrainFuck JIT in PyPy
 
 In what follows we will be implementing a simple interpreted language using PyPy which is a set of tools for implementing interpreters. The exposition follows [PyPy Status Blog: Writing an interpreter with PyPy by Carl Friedrich Bolz](http://morepypy.blogspot.com/2011/04/tutorial-writing-interpreter-with-pypy.html)
 
@@ -103,3 +103,26 @@ The result will be an executable binary that you can then use to interpret the B
 ```
 ./pypyevallop-c 99beer.b
 ```
+
+##Adding a JIT
+
+Pypy can also generate a JIT for us, to do this we must explictly define the language stack frames: in our case this translates to what is constant across the execution of a particular instruction. 
+
+* Constants (green): pc, program, bracket_map
+* Variables (red): tape
+
+The boilerplate to set everything up is in ```pypyevallop.py```
+
+###Usage
+
+```
+python ./pypy/pypy/translator/goal/translate.py pypyevallop.py
+```
+
+Should produce a much larger binary that interprets the BrainFuck files much faster
+
+###Todo
+
+Deeper dive into how JIT works
+
+
