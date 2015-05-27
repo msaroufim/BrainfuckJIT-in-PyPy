@@ -111,6 +111,11 @@ Pypy can also generate a JIT for us, to do this we must explictly define the lan
 * Constants (green): pc, program, bracket_map
 * Variables (red): tape
 
+```python
+jitdriver = JitDriver(greens=['pc', 'program', 'bracket_map'], reds=['tape'])
+```
+
+
 The boilerplate to set everything up is in ```pypyevallop.py```
 
 ###Usage
@@ -119,10 +124,27 @@ The boilerplate to set everything up is in ```pypyevallop.py```
 python ./pypy/pypy/translator/goal/translate.py pypyevallop.py
 ```
 
+```python
+def mainloop(...):
+    ...
+    while pc < len(program):
+        jitdriver.jit_merge_point(pc=pc, tape=tape, program=program,bracket_map=bracket_map)
+        ...
+```
+
 Should produce a much larger binary that interprets the BrainFuck files much faster
 
-###Todo
+###How it works
 
-Deeper dive into how JIT works
+The interpreter is usually running on your code as it is written, when it enters a loop that loop is considered hot and marked to be traced. When the loop is finished, the trace is sent to an optimizer and then an assembler which outputs machine code that gets executed every time an instruction is logged.
 
+You can see how it works by adding a ```get_location``` function that you pass to the ```JitDriver```
 
+```python
+def get_location(pc, program, bracket_map):
+    return "%s_%s_%s" % (
+            program[:pc], program[pc], program[pc+1:]
+            )
+jitdriver = JitDriver(greens=['pc', 'program', 'bracket_map'], reds=['tape'],
+        get_printable_location=get_location)
+```
